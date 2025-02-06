@@ -1,9 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const FileContactService = require('./FileContactService');
+const setupCli = require('./Cli');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+const contactService = new FileContactService();
+setupCli(contactService);
