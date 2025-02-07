@@ -3,14 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node routes/index.js",
-    "test": "mocha"
+    "start": "node index.js",
+    "test": "mocha",
+    "serve": "node index.js serve"
   },
   "dependencies": {
+    "body-parser": "^2.0.2",
     "chalk": "^4.1.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "express": "5.0.0",
+    "express": "^5.0.0",
     "http-errors": "~1.6.3",
     "ladash": "^1.2.0",
     "lodash": "^4.17.21",
@@ -19,7 +21,7 @@
     "yargs": "^17.7.2"
   },
   "description": "Application de contacts",
-  "main": "routes/index.js",
+  "main": "index.js",
   "keywords": [
     "Contacts",
     "Application",

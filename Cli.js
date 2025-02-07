@@ -1,5 +1,6 @@
 const yargs = require('yargs');
 const FileContactService = require("./FileContactService");
+const createServer = require("./Server");
 
 function setUpCli() {
     let useColors = true;
@@ -68,6 +69,16 @@ function setUpCli() {
             handler: () => {
                 let fileContactService = new FileContactService();
                 fileContactService.watch();
+            }
+        })
+        .command({
+            command: 'serve',
+            describe: 'Start the server',
+            handler: () => {
+                let fileContactService = new FileContactService();
+                const server = createServer(fileContactService);
+                server.start();
+                console.log('Server started. Press Ctrl+C to stop.');
             }
         })
         .help()
