@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const setupRoutes = require('./Router');
+const router = require('./Router');
+const socketio = require('socket.io');
 
 function createServer(contactService) {
     const app = express();
@@ -11,23 +12,29 @@ function createServer(contactService) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
-    setupRoutes(app, contactService);
-
     // Fichiers statiques
     app.use(express.static(path.join(__dirname, 'public')));
+
+    function start(){
+        const server = app.listen(port, () => {
+            console.log(`Server running at http://localhost:${port}`);
+        });
+
+        const io = socketio(server, {
+            cors: {
+                origin: '*',
+                methods: ['GET', 'POST', 'PUT']
+            }
+        });
+
+        router(app, io, contactService);
+    }
 
     // Gestion des erreurs
     app.use((err, req, res, next) => {
         console.error(err.stack);
         res.status(500).json({ error: 'Something broke!' });
     });
-
-    // Démarrage du serveur
-    const start = () => {
-        app.listen(port, () => {
-            console.log(`Server running at http://localhost:${port}`);
-        });
-    };
 
     return {
         app,

@@ -56,4 +56,14 @@ function setupRoutes(app, fileContactService){
     });
 }
 
-module.exports = setupRoutes;
+module.exports = function (app, io, fileContactService){
+    io.on('connection', socket => {
+        console.log('A user connected');
+
+        socket.on ('disconnect', () => {
+            console.log('User disconnected');
+        });
+    });
+
+    setupRoutes(app, fileContactService);
+}
