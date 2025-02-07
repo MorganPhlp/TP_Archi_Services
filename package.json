@@ -12,6 +12,7 @@
     "chalk": "^4.1.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "denodeify": "^1.2.1",
     "express": "^5.0.0",
     "http-errors": "~1.6.3",
     "ladash": "^1.2.0",

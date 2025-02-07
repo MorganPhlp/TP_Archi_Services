@@ -3,6 +3,7 @@ const fd = require('fs');
 const Contact = require('./Contact');
 const ContactService = require('./ContactService');
 const {useColors} = require("debug");
+const writeImplem = require('./WriteImplem');
 
 class FileContactService{
     path = 'contacts.json';
@@ -27,14 +28,9 @@ class FileContactService{
     }
 
     write(contacts, callback){
-        const jsonData = JSON.stringify(contacts);
-        fd.writeFile(this.path, jsonData, (err) => {
-            if(err){
-                console.error(err);
-                return;
-            }
-            callback();
-        });
+        writeImplem.asyncAwait(this.path, contacts)
+            .then(() => callback(true))
+            .catch(err => console.error(err));
     }
 
     add(firstName, lastName, callback){
